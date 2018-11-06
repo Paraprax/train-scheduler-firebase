@@ -26,77 +26,112 @@
 </head>
 <body>
 
-    <div class="page-header">
-        <div>FUNCTION JUNCTION</div>
-        <h5 class="tagline">WHERE THE TRAINS RUN ON TIME</h5>
-    </div>
+    <div class="page-header"> <!-- header bar --> 
+        <div id="page-name">FUNCTION JUNCTION</div>
+        <h5 id="tagline">WHERE THE TRAINS RUN ON TIME</h5>
+    </div> <!-- end of header-->
 
-    <div class="container">
-       <h2 class="table-title">TODAY'S TRAINS</h2>        
-        <table class="table table-dark table-hover table-border">
-            <thead class="thead-light">
-            <tr>
-                <th>Train Name</th>
-                <th>Destination</th>
-                <th>Frequency(min)</th>
-                <th>Next Arrival</th>
-                <th>Time Until Next Departure</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Train A</td>
-                <td>Walla Walla, WA</td>
-                <td>30</td>
-                <td>12:00</td>
-                <td>11h 37m</td>
-            </tr>
-            <tr>
-                <td>Train B</td>
-                <td>Keokuk, IA</td>
-                <td>30</td>
-                <td>12:00</td>
-                <td>11h 37m</td>
-            </tr>
-             <tr>
-                <td>Train C</td>
-                <td>Cucamonga, CA</td>
-                <td>30</td>
-                <td>12:00</td>
-                <td>11h 37m</td>
-            </tr>
-            <tr>
-                <td>Train D</td>
-                <td>Seattle, WA</td>
-                <td>30</td>
-                <td>12:00</td>
-                <td>11h 37m</td>
-            </tr>
-             <tr>
-                <td>Train E</td>
-                <td>Albuquerque, NM</td>
-                <td>30</td>
-                <td>12:00</td>
-                <td>11h 37m</td>
-            </tr>
-            <tr>
-                <td>Train F</td>
-                <td>Utica, NY</td>
-                <td>30</td>
-                <td>12:00</td>
-                <td>11h 37m</td>
-            </tr>
-            <tr>
-                <td>Train G</td>
-                <td>Crystal Beach, FL</td>
-                <td>30</td>
-                <td>12:00</td>
-                <td>11h 37m</td>
-            </tr>
-            
-            </tbody>
-        </table>
-    </div>
+    <div class="container"> <!-- container for main page contents --> 
+
+        <div class="row"> <!-- train schedule row --> 
+            <h2 class="section-title">TODAY'S TRAINS</h2>     
+            <table class="table table-dark table-hover" id="train-schedule"> <!-- train schedule table --> 
+
+                <thead> 
+                <tr>
+                    <th>Train Name</th>
+                    <th>Destination</th>
+                    <th>Frequency(min)</th>
+                    <th>Next Arrival</th>
+                    <th>Time Until Next Departure</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>Train A</td>
+                    <td>Walla Walla, WA</td>
+                    <td>30</td>
+                    <td>12:00</td>
+                    <td>11h 37m</td>
+                </tr>
+                <tr>
+                    <td>Train B</td>
+                    <td>Keokuk, IA</td>
+                    <td>30</td>
+                    <td>12:00</td>
+                    <td>11h 37m</td>
+                </tr>
+                <tr>
+                    <td>Train C</td>
+                    <td>Cucamonga, CA</td>
+                    <td>30</td>
+                    <td>12:00</td>
+                    <td>11h 37m</td>
+                </tr>
+                <tr>
+                    <td>Train D</td>
+                    <td>Seattle, WA</td>
+                    <td>30</td>
+                    <td>12:00</td>
+                    <td>11h 37m</td>
+                </tr>
+                <tr>
+                    <td>Train E</td>
+                    <td>Albuquerque, NM</td>
+                    <td>30</td>
+                    <td>12:00</td>
+                    <td>11h 37m</td>
+                </tr>
+                <tr>
+                    <td>Train F</td>
+                    <td>Utica, NY</td>
+                    <td>30</td>
+                    <td>12:00</td>
+                    <td>11h 37m</td>
+                </tr>
+                <tr>
+                    <td>Train G</td>
+                    <td>Crystal Beach, FL</td>
+                    <td>30</td>
+                    <td>12:00</td>
+                    <td>11h 37m</td>
+                </tr>
+                
+                </tbody>
+            </table> <!-- end of train schedule table --> 
+
+        </div> <!-- end of schedule row --> 
+
+
+        <div class="row" > <!-- form row -->
+
+            <div class="section-title">Add A Train</div>
+
+            <div class="col col-md-12" id="train-form">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="name-input">Train Name:</label>
+                        <input class="form-control" id="name-input" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="destination-input">Destination:</label>
+                        <input class="form-control" id="destination-input" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="first-train-input">First Train Time(HH:mm - Use 24hr Format):</label>
+                        <input class="form-control" id="first-train-input" type="number">
+                    </div>
+                    <div class="form-group">
+                        <label for="frequency-input">Frequency (minutes):</label>
+                        <input class="form-control" id="frequency-input" type="number">
+                    </div>
+                    <button class="btn" id="submit-button" type="submit">SUBMIT</button>
+                </form>
+            </div>
+        </div> <!-- end form row -->
+
+    </div> <!-- end of container form -->
     
 </body>
 </html>
