@@ -1,0 +1,24 @@
+body {
+    background-image: url("../images/obsidian_streetview_brass.jpg");
+    background-position: top;
+}
+
+.page-header {
+    background-color: black;
+    color: white;
+    font-family: Decotech TL;
+    font-size: 60pt;
+    opacity: 0.6;
+    padding: 5px;
+    text-align: center;
+}
+
+.tagline {
+    font-family: Futura, Arial, Helvetica, sans-serif;;
+    font-style: italic;
+}
+
+.table-title {
+    color: white;
+    font-family: Futura, Arial, Helvetica, sans-serif;
+}
