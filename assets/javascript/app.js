@@ -18,7 +18,21 @@ $(document).ready(function(){
             firstTime: 0,
             frequency: 0,
     }
-    
+
+    $("#submit-button").on("click", function(){
+
+        console.log("aLl aBoARd!");
+
+        event.preventDefault();
+
+        train.name = $("#name-input").val().trim();
+        train.destination = $("#destination-input").val().trim();
+        train.firstTime = $("#first-train-input").val().trim();
+        train.frequency = $("#frequency-input").val().trim();
+  
+        database.ref().push(train);
+  
+      });
     
 
 }); // end of docready function
