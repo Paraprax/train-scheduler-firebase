@@ -9,11 +9,18 @@ $(document).ready(function(){
       };
   
     firebase.initializeApp(config);
-  
+
     var database = firebase.database();
 
-    var time = moment().format('h:mm:ss a');
-    $("#clock").html(time);
+    var time; // time variable is declared
+
+    function setTime() { //function sets time using moment.js and updates the clock HTML
+        time = moment().format('h:mm:ss a');
+        $("#clock").html(time);
+    }
+
+    setTime(); //initial function call to set time on pageload
+    setInterval(function(){ setTime(); }, 1000); //setTime is called again once per second
   
     var train = { // object to hold user-submitted values for new trains
             name: "",
