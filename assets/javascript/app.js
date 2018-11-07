@@ -11,6 +11,9 @@ $(document).ready(function(){
     firebase.initializeApp(config);
   
     var database = firebase.database();
+
+    var time = moment().format('h:mm:ss a');
+    $("#clock").html(time);
   
     var train = { // object to hold user-submitted values for new trains
             name: "",
@@ -22,7 +25,6 @@ $(document).ready(function(){
     //'click' function to submit four values to the keys of the train object:
     $("#submit-button").on("click", function(){ 
 
-        $("#clock").html(time);
         console.log(time);
 
         console.log("aLl aBoARd!"); //verifier
