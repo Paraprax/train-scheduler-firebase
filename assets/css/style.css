@@ -3,6 +3,13 @@ body {
     background-position: top;
 }
 
+#clock {
+    color: white;
+    font-family: Decotech TL, Futura, Arial, Helvetica, sans-serif;
+    font-size: 35pt;
+    text-align: center;
+}
+
 .form-group {
     color: white;
 }
@@ -54,7 +61,7 @@ body {
     margin-bottom: 5%;
 }
 
-#train-schedule {
+#train-schedule { /* id on the entire table element */
     border-color: darkred;
     border-style: groove;
     border-width: 4px;

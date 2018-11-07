@@ -22,6 +22,9 @@ $(document).ready(function(){
     //'click' function to submit four values to the keys of the train object:
     $("#submit-button").on("click", function(){ 
 
+        $("#clock").html(time);
+        console.log(time);
+
         console.log("aLl aBoARd!"); //verifier
 
         event.preventDefault();
@@ -36,19 +39,21 @@ $(document).ready(function(){
   
       });
 
+
       //'child-added' function to update the HTML based on new values in the database:
-      database.ref().on("child_added", function(snapshot) { 
+      database.ref().on("child_added", function(stored_train) { 
                                                           //use "child_added" instead of "value", because 
                                                           //we're using "push" to ADD to the database instead 
                                                           //of "set" to CHANGE the data in it
 
         console.log("*train whistle noise*"); //verifier
+        console.log(stored_train.val());
 
         // turn the values from the train object into HTML elements:
         var tableRow = $("<tr>");
-        tableRow.append("<td>" + train.name + "</td>");
-        tableRow.append("<td>" + train.destination + "</td>");
-        tableRow.append("<td>" + train.frequency + "</td>");
+        tableRow.append("<td>" + stored_train.val().name + "</td>");
+        tableRow.append("<td>" + stored_train.val().destination + "</td>");
+        tableRow.append("<td>" + stored_train.val().frequency + "</td>");
 
         $("tbody").append(tableRow); // add the new row of HTML data to the table body
 
