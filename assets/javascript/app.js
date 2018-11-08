@@ -27,6 +27,7 @@ $(document).ready(function(){
             destination: "",
             firstTime: 0,
             frequency: 0,
+            perDay: 0,
     }
 
     //'click' function to submit four values to the keys of the train object:
@@ -43,6 +44,7 @@ $(document).ready(function(){
         train.destination = $("#destination-input").val().trim();
         train.firstTime = $("#first-train-input").val().trim();
         train.frequency = $("#frequency-input").val().trim();
+        train.perDay = $("#per-day-input").val().trim();
   
         database.ref().push(train); //pushes the train object with its four new values to the database referenced earlier
   
@@ -60,10 +62,23 @@ $(document).ready(function(){
 
         // here we will calculate 'next arrival' based on frequency and current time: - - - - - - -
 
-        var firstTrain = Number(stored_train.val().firstTime); // use js native "Number()" method to turn values from strings into integers that can be math'd
-        var frequencyMins = Number(stored_train.val().frequency); // ''
+        //variable-creep warning....
 
-        var nextTrain = (firstTrain + frequencyMins); 
+        var firstTrainTimeInt = Number(stored_train.val().firstTime); // use js native "Number()" method to turn values from strings into integers that can be math'd
+        var frequencyMinsInt = Number(stored_train.val().frequency); // ''
+        var trainsPerDayInt = Number(stored_train.val().perDay);
+
+
+        var TimeStringFormat = String(firstTrainTimeInt/100) + ":00:00"; //divide the input number (eg. "0800") by 100 to produce
+                                                                    //a two-digit number, and convert it to a string with the 
+                                                                    //minutes and seconds tacked on for moment.js formatting later
+
+        console.log(time);
+
+
+        var nextTrain = moment(TimeStringFormat, "h:mm:ss").fromNow();
+        
+        var minutesAway = moment(nextTrain, 'h:mm:ss a').fromNow(); //var is defined using fromNow method on nextTime data
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -73,9 +88,7 @@ $(document).ready(function(){
         tableRow.append("<td>" + stored_train.val().destination + "</td>");
         tableRow.append("<td>" + stored_train.val().frequency + "</td>");
         tableRow.append("<td>" + nextTrain + "</td>");
-        tableRow.append("<td>" + /* value calculated from moment based on NextArrival */ + "</td>");
-
-        
+        tableRow.append("<td>" + minutesAway + "</td>");
 
 
         $("tbody").append(tableRow); // add the new row of HTML data to the table body
