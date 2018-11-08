@@ -58,15 +58,31 @@ $(document).ready(function(){
         console.log("*train whistle noise*"); //verifier
         console.log(stored_train.val());
 
+        // here we will calculate 'next arrival' based on frequency and current time: - - - - - - -
+
+        var firstTrain = Number(stored_train.val().firstTime); // use js native "Number()" method to turn values from strings into integers that can be math'd
+        var frequencyMins = Number(stored_train.val().frequency); // ''
+
+        var nextTrain = (firstTrain + frequencyMins); 
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
         // turn the values from the train object into HTML elements:
         var tableRow = $("<tr>");
         tableRow.append("<td>" + stored_train.val().name + "</td>");
         tableRow.append("<td>" + stored_train.val().destination + "</td>");
         tableRow.append("<td>" + stored_train.val().frequency + "</td>");
+        tableRow.append("<td>" + nextTrain + "</td>");
+        tableRow.append("<td>" + /* value calculated from moment based on NextArrival */ + "</td>");
+
+        
+
 
         $("tbody").append(tableRow); // add the new row of HTML data to the table body
 
     });
     
+//use setInterval to update the last two columns once per second too!
+
 
 }); // end of docready function
