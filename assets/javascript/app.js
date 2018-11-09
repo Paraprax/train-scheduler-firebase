@@ -60,26 +60,37 @@ $(document).ready(function(){
         console.log("*train whistle noise*"); //verifier
         console.log(stored_train.val());
 
-        // here we will calculate 'next arrival' based on frequency and current time: - - - - - - -
+        
+
+        // now to calculate 'next arrival' based on frequency and current time: - - - - - - -
 
         //variable-creep warning....
 
-        var firstTrainTimeInt = Number(stored_train.val().firstTime); // use js native "Number()" method to turn values from strings into integers that can be math'd
-        var frequencyMinsInt = Number(stored_train.val().frequency); // ''
-        var trainsPerDayInt = Number(stored_train.val().perDay);
+        // ~~~~~ NEW ATTEMPT: ~~~~~~ 
+
+        // Assumptions
+    var trainFrequency = stored_train.val().frequency;
+    var firstTrain = stored_train.val().firstTime;
+ 
+
+    // First Time (pushed back 1 year to make sure it comes before current time)
+    var firstTrainConverted = moment(firstTrain, "LT").subtract(1, "years");
+
+    // Current Time
 
 
-        var TimeStringFormat = String(firstTrainTimeInt/100) + ":00:00"; //divide the input number (eg. "0800") by 100 to produce
-                                                                    //a two-digit number, and convert it to a string with the 
-                                                                    //minutes and seconds tacked on for moment.js formatting later
+    // Difference between the times
+    var diffTime = moment().diff(moment(firstTrainConverted), "minutes"); //minutes between the first train and the current time
 
-        console.log(time);
+    // Time apart
+    var timeRemainder = (diffTime % trainFrequency); //divide number of minutes since the first train by the number of minutes it takes for each train to arrive, and give the remainder, which will then be subtracted from the frequency(min) to find the # of minutes until the next train
+    
 
+    // Minute Until Train
+    var minutesAway = (trainFrequency - timeRemainder);
 
-        var nextTrain = moment(TimeStringFormat, "h:mm:ss").fromNow();
-        
-        var minutesAway = moment(nextTrain, 'h:mm:ss a').fromNow(); //var is defined using fromNow method on nextTime data
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // Next Train arrival time
+    var nextTrain = moment().add(minutesAway, "minutes").format("LT");
 
 
         // turn the values from the train object into HTML elements:
@@ -88,14 +99,31 @@ $(document).ready(function(){
         tableRow.append("<td>" + stored_train.val().destination + "</td>");
         tableRow.append("<td>" + stored_train.val().frequency + "</td>");
         tableRow.append("<td>" + nextTrain + "</td>");
-        tableRow.append("<td>" + minutesAway + "</td>");
+        tableRow.append("<td class='minutesAway'>" + minutesAway + "</td>");
 
 
         $("tbody").append(tableRow); // add the new row of HTML data to the table body
 
+        
     });
-    
-//use setInterval to update the last two columns once per second too!
 
+    setTimeout(function() { displayMinutesAway() }, 5000);
+    
+    function displayMinutesAway() { //function sets time using moment.js and updates the clock HTML
+
+        $(".minutesAway").each(function() {
+            var timeDataHTML = $(this);
+
+            setInterval(function(){
+                console.log( timeDataHTML.html() )
+                var newValue = (Number(timeDataHTML.html()) - 1);
+                timeDataHTML.html(newValue); //update the html
+            }, 60000);
+
+        })
+        
+    
+    };
 
 }); // end of docready function
+
