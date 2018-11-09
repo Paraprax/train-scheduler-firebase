@@ -48,11 +48,11 @@ $(document).ready(function(){
   
         database.ref().push(train); //pushes the train object with its four new values to the database referenced earlier
   
-      });
+    });
 
 
-      //'child-added' function to update the HTML based on new values in the database:
-      database.ref().on("child_added", function(stored_train) { 
+    //'child-added' function to update the HTML based on new values in the database:
+    database.ref().on("child_added", function(stored_train) { 
                                                           //use "child_added" instead of "value", because 
                                                           //we're using "push" to ADD to the database instead 
                                                           //of "set" to CHANGE the data in it
@@ -60,38 +60,33 @@ $(document).ready(function(){
         console.log("*train whistle noise*"); //verifier
         console.log(stored_train.val());
 
-        
 
         // now to calculate 'next arrival' based on frequency and current time: - - - - - - -
 
         //variable-creep warning....
 
-        // ~~~~~ NEW ATTEMPT: ~~~~~~ 
-
-        // Assumptions
-    var trainFrequency = stored_train.val().frequency;
-    var firstTrain = stored_train.val().firstTime;
- 
-
-    // First Time (pushed back 1 year to make sure it comes before current time)
-    var firstTrainConverted = moment(firstTrain, "LT").subtract(1, "years");
-
-    // Current Time
-
-
-    // Difference between the times
-    var diffTime = moment().diff(moment(firstTrainConverted), "minutes"); //minutes between the first train and the current time
-
-    // Time apart
-    var timeRemainder = (diffTime % trainFrequency); //divide number of minutes since the first train by the number of minutes it takes for each train to arrive, and give the remainder, which will then be subtracted from the frequency(min) to find the # of minutes until the next train
+        var trainFrequency = stored_train.val().frequency;
+        var firstTrain = stored_train.val().firstTime;
     
 
-    // Minute Until Train
-    var minutesAway = (trainFrequency - timeRemainder);
+        // First Time (pushed back 1 year to make sure it comes before current time)
+        var firstTrainConverted = moment(firstTrain, "LT").subtract(1, "years");
 
-    // Next Train arrival time
-    var nextTrain = moment().add(minutesAway, "minutes").format("LT");
 
+        // difference between the initial train time and current local time
+        var diffTime = moment().diff(moment(firstTrainConverted), "minutes"); //minutes between the first train and the current time
+
+        //divide number of minutes since the first train by the number of minutes it takes 
+        //for each train to arrive, and give the remainder, which will then be subtracted 
+        //from the frequency(min) to find the # of minutes until the next train:
+        var timeRemainder = (diffTime % trainFrequency); 
+
+
+        // how many minutes away the next train is
+        var minutesAway = (trainFrequency - timeRemainder);
+
+            // next train
+        var nextTrain = moment().add(minutesAway, "minutes").format("LT");
 
         // turn the values from the train object into HTML elements:
         var tableRow = $("<tr>");
@@ -103,22 +98,24 @@ $(document).ready(function(){
 
 
         $("tbody").append(tableRow); // add the new row of HTML data to the table body
-
         
     });
 
-    setTimeout(function() { displayMinutesAway() }, 5000);
-    
-    function displayMinutesAway() { //function sets time using moment.js and updates the clock HTML
 
-        $(".minutesAway").each(function() {
+    setTimeout(function() { displayMinutesAway() }, 5000); //displayMinutesAway was running before the 
+                                                           // table elements were populated so threw a timeout on the function call
+    
+    function displayMinutesAway() { //function to re-calculate and update the "minutes away" element once per minute
+
+        $(".minutesAway").each(function() { //go through each item with this class
+
             var timeDataHTML = $(this);
 
             setInterval(function(){
                 console.log( timeDataHTML.html() )
-                var newValue = (Number(timeDataHTML.html()) - 1);
-                timeDataHTML.html(newValue); //update the html
-            }, 60000);
+                var newValue = (Number(timeDataHTML.html()) - 1); //subtract one from the number in the element
+                timeDataHTML.html(newValue); 
+            }, 60000); //update the html every 60 seconds
 
         })
         
